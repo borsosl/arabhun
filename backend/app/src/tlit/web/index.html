@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Transliteration</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+</head>
+<body>
+<h1>Arabic transliteration for computer processing</h1>
+
+<div>
+    <div class="trans">
+        <div class="title"><u>T</u>ransliteration:</div>
+        <div class="settings">
+            Source:
+            <input type="radio" name="input-type" value="trans" checked id="is-trans"> Transliteration
+            <input type="radio" name="input-type" value="uni" id="is-uni"> Arabic&emsp;
+            <span><input type="button" value="Load sample" id="load-sample">&emsp;</span>
+            <span><img src="clipboard.png" id="copy-trans" accesskey="o" title="Copy: alt-o"></span>
+        </div>
+    </div>
+
+    <textarea id="in" autofocus accesskey="t" tabindex="1" placeholder="Type latin letters here as explained below or load sample"></textarea>
+</div>
+
+<div>
+    <div class="arabic">
+        <div class="title"><u>A</u>rabic:</div>
+        <div class="settings">
+            <input type="button" value="+" id="font-plus">
+            Font size
+            <input type="button" value="-" id="font-minus">&emsp;
+            <span><input type="checkbox" id="tashkil"></span> Show tashkil&emsp;
+            <span><input type="checkbox" id="ltr"></span> Left-to-right&emsp;
+            <span><img src="wiktionary.png" id="wiktionary" accesskey="w" title="Wiktionary: alt-w"></span>
+            <span><img src="gtranslate.png" id="gtranslate" accesskey="g" title="G.Translate: alt-g"></span>
+            <span><img src="clipboard.png" id="copy-arabic" accesskey="c" title="Copy: alt-c"></span>
+        </div>
+    </div>
+
+    <textarea id="out" class="rtl" accesskey="a" tabindex="2" placeholder="Paste arabic and change source"></textarea>
+</div>
+
+<h3 class="top40">Usage and explanation</h3>
+<pre>
+basic letters and marks:
+    alphabet: A b t t* j/g H X d d*/z* r z s s* S D T Z 3 R f q k l m n h U/w/O Y/y/E
+    vowel marks: a i/e u/o
+    sukUn: 0
+    s*ad+ah*: +
+    tanwYn: AN aN iN uN
+
+    (w/y: alternatives for diphtongs in contrast to pure vowel)
+    (g/z*/E/O/e/o: alternatives for dialects)
+2: hamza
+    2a/2u       above 2alif with vowel mark
+    2A/2u*      above 2alif with no vowel mark
+    20          above 2alif with sukUn
+    2i          below 2alif with vowel mark
+    2i*         below 2alif with no vowel mark
+    2Y/2U       above yA2 or wAw
+    A~          2alif with mad+ah*
+    2           standalone sign at end of word
+    2-          standalone sign followed by vowel mark, suffix, etc.
+    2e/2o       on 2alif with phonetical variations for 2i and 2u
+special letters and marks:
+    A*  2alif maqsUrah*
+    i*  2alif for initial i
+    u*  2alif for initial u
+    h*  tA2 mar0buUTah* pronounced as ah
+    T*  tA2 mar0buUTah* pronounced as at
+    J   j w/ 3 dots (EGY j, IRQ/MOR ch)
+    G   q w/ 3 dots (ALG/TUN g)
+    K   k w/ 3 dots (MOR g)
+    p   b w/ 3 dots (MOR p)
+    v   f w/ 3 dots (MOR v)
+    V   f w/ 1 dot under (ALG/TUN v)
+    1   superscript 2alif Xan0jariy+ah* (a.k.a. dagger alif)
+    1*  subscript 2alif
+    1~  2alif waSlah*
+    ._  arabic full stop
+    -   deleted, can be used for separating affixes
+    _   taTwYl
+    ^   the preceding mark is always written, eg. Al-l+^1^h
+    {   interpret following text as Arabic
+    }   interpret following text as Latin
+    [   start of number within Arabic context or simple Latin (letters only)
+    ]   end of corresponding block
+    `   quote single character as Latin
+</pre>
+
+<h3 class="top40">Objectives of this transliteration scheme</h3>
+<pre>
+- be as readable as possible
+- may be processed with software without ambiguity
+  - be searchable with regular expressions
+- use a single character whenever possible
+- use characters available on most latin-based national keyboards
+- avoid arabizi numbers if there is a more expressive/readable latin capital letter
+- avoid capital I as it is not distinguishable from lowercase L in sans-serif fonts
+- avoid th, dh, sh pairs for a single letter, since letter-boundaries then become ambiguous
+  - cf. bldhA = baladuhA,
+  - hd*h = h1d*ihi /haadhihi/,
+  - s*dh* = s*ad+ah* /shaddah/
+- support inclusion and exclusion of diacritic marks (tas*0kiYl), at the same time
+  a) text can be written without marks (eg. ts*kYl)
+  b) text can be written with marks and computer can filter them for printing (-a, -0, -i)
+  c) text can be written with marks and full diacritic printing used
+  - cf. 2AnnY = 2an+aniY /annanii/; 2AnY = 2an+iY /annii/
+    - 2a can be replaced with 2A (removes fat0Hah*)
+    - +,a,i can be removed to get no-diacritics writing
+  - thus consonants should be written as many times as in no-diacritics writing, eg. s*dh*
+- reserve punctuation marks for their original use
+- avoid apostrophe as variation character as it is often associated with hamza
+- allow some phonetically expressive variations of diphtongs
+  - while Y and y both translate to letter yA2, cf. fiY and bay0na
+  - while U and w both translate to letter wAw, cf. nUr and yaw0m
+- allow some phonetically expressive variations for dialects and loanwords
+  - 2eEh: 2e = 2i, E = Y,
+  - mat0roO: o = u, O > U
+  - telefiz0yoOn: e = i
+- optionally express change of pronunciation of tA2 mar0buUTah*
+  - eg. jAmi3ah* >>> jAmi3aT* lan0dan
+- non-Arabic language support:
+  - it's best to create separate transliteration systems
+  - otherwise some frequent letters would have worse readability with combination letters
+- unsupported special characters can be included as Unicode in input
+</pre>
+
+<script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+html, textarea {
+    font: 1em/1.6 sans-serif;
+}
+
+body {
+    padding: 0 1em;
+    background-color: #ddd;
+}
+
+h1 {
+    text-align: center;
+    font-size: 1.3em;
+    margin: 0 0 0.5em;
+    padding-top: 0;
+}
+
+h3 {
+    font-size: 1em;
+    text-align: center;
+    margin: 0 0 0.5em;
+}
+
+textarea {
+    font-family: Monaco, Consolas, monospace;
+    border: 3px double green;
+    background: #90ee90;
+    box-sizing: border-box;
+    margin: 0.2em 0 0.3em;
+    padding: .5em;
+}
+
+textarea {
+    display: block;
+    width: 100%;
+    resize: vertical;
+    min-height: 4em;
+    height: 8em;
+}
+
+.top40 {
+    margin-top: 40px;
+}
+
+#in {
+    height: 3em;
+}
+
+#out {
+    unicode-bidi: embed;
+    font-size: 160%;
+    height: 3em;
+}
+
+.rtl {
+    direction: rtl;
+}
+
+.trans, .arabic {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.settings {
+    flex: 1 1 auto;
+    text-align: right;
+}
+
+.settings span {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 100%;
+}
+
+.arabic .settings {
+    font-size: 80%;
+}
+
+.title {
+    flex: 0 0 auto;
+}
+
+img {
+    height: 20px;
+}
