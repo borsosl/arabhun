@@ -1,7 +1,7 @@
 import {map} from './unicode-to-tlit-map';
 
 const lineSplitter = /\r?\n/;
-const pendingRex = /^([auoieA012]|2A|[aiu]N|1[*~])$/;
+const pendingRex = /^([auoieA012]|2A|2i|[aiu]N|1[*~])$/;
 const shaddaSwapRex = /^([auoie012]|[aiu]N|1[*~])$/;
 const quoteEndRex = /(\s*)}/g;
 const numEndRex = /(\s*)]/g;
@@ -100,9 +100,12 @@ export function processLine(line: string, doQuote = true) {
                 else
                     write(pending, cp);
             } else if(pending === '2i') {
-                if(ch === 'i')
-                    ch = pending;
-                else
+                if(ch === 'i') {
+                    write('2i', cp);
+                    prevCh = pending;
+                    pending = '';
+                    continue;
+                } else
                     write('2i*', cp);
             } else if(pending === '2') {
                 write('2-', cp);
@@ -110,12 +113,6 @@ export function processLine(line: string, doQuote = true) {
                 write(pending, cp);
             }
             pending = '';
-        } else {
-            if(ch === '2i') {
-                pending = ch;
-                prevCh = '';
-                continue;
-            }
         }
         if(wordStart === cp.length) {
             if(ch === 'Y')

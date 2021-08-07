@@ -2,12 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Transliteration</title>
+    <title>Transliteration (Arabic keyboard)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="index.css">
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
 </head>
 <body>
-<h1>Arabic transliteration for computer processing</h1>
+<h1>A transliteration scheme and keyboard for Arabic script</h1>
 
 <div>
     <div class="trans">
@@ -21,7 +22,8 @@
         </div>
     </div>
 
-    <textarea id="in" autofocus accesskey="t" tabindex="1" placeholder="Type latin letters here as explained below or load sample"></textarea>
+    <textarea id="in" autofocus accesskey="t" tabindex="1" spellcheck="false"
+              placeholder="Type latin letters here as explained below or load sample"></textarea>
 </div>
 
 <div>
@@ -39,94 +41,541 @@
         </div>
     </div>
 
-    <textarea id="out" class="rtl" accesskey="a" tabindex="2" placeholder="Paste arabic and change source"></textarea>
+    <textarea id="out" class="rtl" accesskey="a" tabindex="2" lang="arabic"
+              placeholder="Paste arabic and change source"></textarea>
 </div>
 
-<h3 class="top40">Usage and explanation</h3>
-<pre>
-basic letters and marks:
-    alphabet: A b t t* j/g H X d d*/z* r z s s* S D T Z 3 R f q k l m n h U/w/O Y/y/E
-    vowel marks: a i/e u/o
-    sukUn: 0
-    s*ad+ah*: +
-    tanwYn: AN aN iN uN
+<h3 class="top40">Characteristics of the scheme</h3>
+<ul>
+    <li>
+        <b>ASCII-only</b> - for the benefit of non-technical users, it only uses characters that are
+        available on most Latin-based keyboards. Accessible on any platform without special software.
+    </li>
+    <li>
+        <b>Readable and easier to memorize</b> - where the lowercase and uppercase Latin letter is not enough
+        for all the variations of corresponding sounds, then for the sake of readability this scheme breaks with
+        the tradition of using a single character, and allows some sequences consisting of a letter plus
+        usually one special symbol. Thus one Latin base letter can refer to more than two Arabic letters,
+        and sequences reflect the original sound better than some substitute sign. It also means that
+        ASCII punctuation marks and other symbols can be preserved for their original purpose.
+    </li>
+    <li>
+        <b>Phonetic</b> - some Arabic letters can be written with multiple corresponding transliteration.
+        This can express pure vowels vs. diphtongs, or differences in dialect, or the change in
+        pronunciation of ة.
+    </li>
+    <li>
+        <b>Unambiguous</b> - even though some letters are expressed with more than one character, the
+        letter boundaries are never ambiguous because the symbol part of a sequence makes no sense in
+        itself. Combinations like th, dh, sh were avoided as they could be interpreted as t + h, etc.
+        instead of a single letter. This is critical for computer processing. Transliterated text is
+        convertible to Arabic script and vice versa. However, phonetic variations will be lost in the
+        reverse conversion, and the most common transliterated version will be used.
+    </li>
+    <li>
+        <b>Embeddable</b> - since characters like {} and [] remain free due to sequences, they can be used
+        for changing between Arabic and Latin context inline. {} marks the beginning and end of Arabic text
+        within a paragraph, while [] marks numerical context within Arabic (since numbers 0, 1, 2, 3 are in use
+        to form letters or marks).
+    </li>
+    <li>
+        <b>Printable</b> - removal of the diacritic marks is a simple process, so a text
+        with diacritics is easily convertible to Unicode with or without them.
+        Text that does not include diacritics is also prefectly valid for regular printing.
+    </li>
+</ul>
 
-    (w/y: alternatives for diphtongs in contrast to pure vowel)
-    (g/z*/E/O/e/o: alternatives for dialects)
-2: hamza
-    2a/2u       above 2alif with vowel mark
-    2A/2u*      above 2alif with no vowel mark
-    20          above 2alif with sukUn
-    2i          below 2alif with vowel mark
-    2i*         below 2alif with no vowel mark
-    2Y/2U       above yA2 or wAw
-    A~          2alif with mad+ah*
-    2           standalone sign at end of word
-    2-          standalone sign followed by vowel mark, suffix, etc.
-    2e/2o       on 2alif with phonetical variations for 2i and 2u
-special letters and marks:
-    A*  2alif maqsUrah*
-    i*  2alif for initial i
-    u*  2alif for initial u
-    h*  tA2 mar0buUTah* pronounced as ah
-    T*  tA2 mar0buUTah* pronounced as at
-    J   j w/ 3 dots (EGY j, IRQ/MOR ch)
-    G   q w/ 3 dots (ALG/TUN g)
-    K   k w/ 3 dots (MOR g)
-    p   b w/ 3 dots (MOR p)
-    v   f w/ 3 dots (MOR v)
-    V   f w/ 1 dot under (ALG/TUN v)
-    1   superscript 2alif Xan0jariy+ah* (a.k.a. dagger alif)
-    1*  subscript 2alif
-    1~  2alif waSlah*
-    ._  arabic full stop
-    -   deleted, can be used for separating affixes
-    _   taTwYl
-    ^   the preceding mark is always written, eg. Al-l+^1^h
-    {   interpret following text as Arabic
-    }   interpret following text as Latin
-    [   start of number within Arabic context or simple Latin (letters only)
-    ]   end of corresponding block
-    `   quote single character as Latin
-</pre>
+<h3 class="top40">Sample transliterated sentence</h3>
+<p>
+    yuUladu jamiY3u Al-n+aAsi 2aH0raAraNA mutasaAwiYna fiY Al0-karaAmah*i wa-Al0-HuquUqi. waqad0 wuhibuUA
+    3aq0laNA wa-DamiYraNA wa-3alay0him0 2an0 yu3aAmila ba30Duhum0 ba30DaNA biruUHi 1~l0-2iXaA2-i.
+</p>
+<p>
+    (Try it out above and cf. <a href="https://en.wikipedia.org/wiki/Buckwalter_transliteration">
+        Buckwalter transliteration</a>)
+</p>
 
-<h3 class="top40">Objectives of this transliteration scheme</h3>
-<pre>
-- be as readable as possible
-- may be processed with software without ambiguity
-  - be searchable with regular expressions
-- use a single character whenever possible
-- use characters available on most latin-based national keyboards
-- avoid arabizi numbers if there is a more expressive/readable latin capital letter
-- avoid capital I as it is not distinguishable from lowercase L in sans-serif fonts
-- avoid th, dh, sh pairs for a single letter, since letter-boundaries then become ambiguous
-  - cf. bldhA = baladuhA,
-  - hd*h = h1d*ihi /haadhihi/,
-  - s*dh* = s*ad+ah* /shaddah/
-- support inclusion and exclusion of diacritic marks (tas*0kiYl), at the same time
-  a) text can be written without marks (eg. ts*kYl)
-  b) text can be written with marks and computer can filter them for printing (-a, -0, -i)
-  c) text can be written with marks and full diacritic printing used
-  - cf. 2AnnY = 2an+aniY /annanii/; 2AnY = 2an+iY /annii/
-    - 2a can be replaced with 2A (removes fat0Hah*)
-    - +,a,i can be removed to get no-diacritics writing
-  - thus consonants should be written as many times as in no-diacritics writing, eg. s*dh*
-- reserve punctuation marks for their original use
-- avoid apostrophe as variation character as it is often associated with hamza
-- allow some phonetically expressive variations of diphtongs
-  - while Y and y both translate to letter yA2, cf. fiY and bay0na
-  - while U and w both translate to letter wAw, cf. nUr and yaw0m
-- allow some phonetically expressive variations for dialects and loanwords
-  - 2eEh: 2e = 2i, E = Y,
-  - mat0roO: o = u, O > U
-  - telefiz0yoOn: e = i
-- optionally express change of pronunciation of tA2 mar0buUTah*
-  - eg. jAmi3ah* >>> jAmi3aT* lan0dan
-- non-Arabic language support:
-  - it's best to create separate transliteration systems
-  - otherwise some frequent letters would have worse readability with combination letters
-- unsupported special characters can be included as Unicode in input
-</pre>
+<h3 class="top40">Alphabet (includes Persian)</h3>
+<table class="tr-expl">
+    <thead>
+    <tr>
+        <td>Arabic</td>
+        <td>Latin</td>
+        <td>Notes</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>ا</td>
+        <td>A<br/>i* / u*</td>
+        <td>
+            Generally uppercase vowels are alphabet letters and lowercase vowels are diacritics.<br/>
+            i*, u* - the vowel that the alif represents at the start of word is specified in
+            transliteration, but its mark is unwanted in tashkil printing mode.
+        </td>
+    </tr>
+    <tr>
+        <td>ب</td>
+        <td>b</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>پ</td>
+        <td>p</td>
+        <td>Persian and Moroccan.</td>
+    </tr>
+    <tr>
+        <td>ت</td>
+        <td>t</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>ث</td>
+        <td>t*</td>
+        <td>
+            This scheme uses mostly * as a modifier symbol to allow more variation to the base letters,
+            cf. t, T, t*, T*.
+        </td>
+    </tr>
+    <tr>
+        <td>ج</td>
+        <td>j / G</td>
+        <td>G - alternative for EGY dialect</td>
+    </tr>
+    <tr>
+        <td>چ</td>
+        <td>C</td>
+        <td>EGY j, IRQ/MOR/Persian ch</td>
+    </tr>
+    <tr>
+        <td>ح</td>
+        <td>H</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>خ</td>
+        <td>X</td>
+        <td>after the Greek letter Chi which has a similar sound</td>
+    </tr>
+    <tr>
+        <td>د</td>
+        <td>d</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>ذ</td>
+        <td>d* / z*</td>
+        <td>z* - alternative for dialects</td>
+    </tr>
+    <tr>
+        <td>ر</td>
+        <td>r</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>ز</td>
+        <td>z</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>ژ</td>
+        <td>J</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>س</td>
+        <td>s</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>ش</td>
+        <td>s*</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>ص</td>
+        <td>S</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>ض</td>
+        <td>D</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>ط</td>
+        <td>T</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>ظ</td>
+        <td>Z</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>ع</td>
+        <td>3</td>
+        <td>Arabizi was not preferred in general, but this one is too commonly used to ignore,
+            and saves E to be used as a vowel instead of being an exception.</td>
+    </tr>
+    <tr>
+        <td>غ</td>
+        <td>R</td>
+        <td>
+            Rayn often sounds like Parisian French "r" and one IPA symbol for it is the
+            upside-down R letter. This leaves g/G for gAf and GYm.
+        </td>
+    </tr>
+    <tr>
+        <td>ف</td>
+        <td>f</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>ق</td>
+        <td>q</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>ك</td>
+        <td>k</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>ک</td>
+        <td>K</td>
+        <td>Persian</td>
+    </tr>
+    <tr>
+        <td>گ</td>
+        <td>g</td>
+        <td>Persian</td>
+    </tr>
+    <tr>
+        <td>ل</td>
+        <td>l</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>م</td>
+        <td>m</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>ن</td>
+        <td>n</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>ه</td>
+        <td>h</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>و</td>
+        <td>U / w / O</td>
+        <td>
+            The capital letters here express a clean long vowel (with an option for dialect pronunciation),
+            while the w may signal a diphtong.
+        </td>
+    </tr>
+    <tr>
+        <td>ي</td>
+        <td>Y / y / E</td>
+        <td>Similar to the above.</td>
+    </tr>
+    <tr>
+        <td>ی</td>
+        <td>Y* / y* / E*</td>
+        <td>Persian version of yah, the dots don't appear in the final position.</td>
+    </tr>
+    <tr>
+        <td>ى</td>
+        <td>A*</td>
+        <td>Alif maqsUrah*.</td>
+    </tr>
+    <tr>
+        <td>ة</td>
+        <td>h* / T*</td>
+        <td>T* - optionally expresses phonetical difference</td>
+    </tr>
+    </tbody>
+</table>
+
+<h3 class="top40">Diacritics</h3>
+<table class="tr-expl">
+    <thead>
+    <tr>
+        <td>Arabic</td>
+        <td>Latin</td>
+        <td>Notes</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td> َ </td>
+        <td>a</td>
+        <td>
+            Lowercase vowels mark diacritic signs. These can be included or excluded in the
+            transliterated version. When included, they can be in turn included or excluded during the
+            conversion into Arabic script.
+        </td>
+    </tr>
+    <tr>
+        <td> ِ <br/>اِ</td>
+        <td>i / e</td>
+        <td>
+            At the beginning of a word the alif is implied.<br/>
+            e - alternative for dialects
+        </td>
+    </tr>
+    <tr>
+        <td> ُ <br/>اُ</td>
+        <td>u / o</td>
+        <td>Similar to the above.</td>
+    </tr>
+    <tr>
+        <td> ً </td>
+        <td>aN</td>
+        <td>
+            If an alif comes after this, it must be explicitlitly added: aNA (just like the mute
+            alif in -UA verb suffix must be explicit).
+        </td>
+    </tr>
+    <tr>
+        <td> ٍ </td>
+        <td>iN</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td> ٌ </td>
+        <td>uN</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>ـاً</td>
+        <td>AN</td>
+        <td>
+            Shorthand for AaN. Some contexts prefer to write the tanwYn above the alif,
+            and not above the previous letter.
+        </td>
+    </tr>
+    <tr>
+        <td> ْ </td>
+        <td>0</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td> ّ </td>
+        <td>+</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>آ</td>
+        <td>A~</td>
+        <td>Alif with maddah. The tilde is a secondary modifier symbol, used for two variations of Alif.</td>
+    </tr>
+    <tr>
+        <td> ٰ </td>
+        <td>1</td>
+        <td>Superscript dagger alif.</td>
+    </tr>
+    <tr>
+        <td> ٖ </td>
+        <td>1*</td>
+        <td>Subscript dagger alif.</td>
+    </tr>
+    </tbody>
+</table>
+
+<h3 class="top40">Hamza</h3>
+<table class="tr-expl">
+    <thead>
+    <tr>
+        <td>Arabic</td>
+        <td>Latin</td>
+        <td>Notes</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>أ</td>
+        <td>2A</td>
+        <td>
+            Above alif with unknown vowel mark or unwanted in tashkil printing mode.
+            Eg. the result of converting from Arabic text without diacritics.
+        </td>
+    </tr>
+    <tr>
+        <td>أَ</td>
+        <td>2a</td>
+        <td>Above alif with known vowel.</td>
+    </tr>
+    <tr>
+        <td>أُ</td>
+        <td>2u / 2o</td>
+        <td>Above alif with known vowel.</td>
+    </tr>
+    <tr>
+        <td>إِ</td>
+        <td>2i / 2e</td>
+        <td>Below alif with vowel mark.</td>
+    </tr>
+    <tr>
+        <td>إ</td>
+        <td>2i* / 2e*</td>
+        <td>
+            Below alif with unwanted vowel mark in tashkil printing mode.
+            Eg. the result of converting from Arabic text without diacritics.
+        </td>
+    </tr>
+    <tr>
+        <td>أ</td>
+        <td>2u* / 2o*</td>
+        <td>
+            Above alif with specified but unwanted vowel mark in tashkil printing mode.
+        </td>
+    </tr>
+    <tr>
+        <td>أْ</td>
+        <td>20</td>
+        <td>Shorthand for 2A0.</td>
+    </tr>
+    <tr>
+        <td>ئ</td>
+        <td>2Y</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>ؤ</td>
+        <td>2U</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>ء</td>
+        <td>2 / 2-</td>
+        <td>
+            Standalone hamza sign. The dash is needed if the word continues and would result
+            in one of the above hamza sequences.
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<h3 class="top40">Others</h3>
+<table class="tr-expl">
+    <thead>
+    <tr>
+        <td>Arabic</td>
+        <td>Latin</td>
+        <td>Notes</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>ڤ</td>
+        <td>v</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>ڢ</td>
+        <td>V</td>
+        <td>ALG/TUN v</td>
+    </tr>
+    <tr>
+        <td>ڨ</td>
+        <td>Q</td>
+        <td>ALG/TUN g</td>
+    </tr>
+    <tr>
+        <td>ڭ</td>
+        <td>G*</td>
+        <td>MOR g</td>
+    </tr>
+    <tr>
+        <td>ٱ</td>
+        <td>1~</td>
+        <td>Alif waslah.</td>
+    </tr>
+    <tr>
+        <td>۔</td>
+        <td>._</td>
+        <td>Dot-underscore - Arabic full stop.</td>
+    </tr>
+    <tr>
+        <td>ـ</td>
+        <td>_</td>
+        <td>
+            underscore - the taTwYl prints the surrounding letter in connected mode or prolongs the connection
+            between neighbouring letters for a calligraphic effect.
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>-</td>
+        <td>
+            The dash is deleted, it does not appear in conversion. It allows the visual separation of
+            prefixes and suffixes in transliteration.
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>^</td>
+        <td>
+            The preceding vowel mark is always written, eg. Al-l+^1^h enforces the s*ad+ah* and the
+            dagger Alif even when tas*kYl is otherwise omitted from the text.
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>{</td>
+        <td>Start of Arabic context.</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>}</td>
+        <td>Start of Latin context.</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>[</td>
+        <td>Within Arabic context: start of numbers.</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>]</td>
+        <td>Within Arabic context: end of numbers.</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>`</td>
+        <td>
+            Within Arabic context: keeps the following one Latin character literally, removing its
+            function in transliteration.
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<h3 class="top40">Additional notes</h3>
+<ul>
+    <li>
+        Capital I was not used, as it is not distinguishable from lowercase L in sans-serif fonts.
+    </li>
+    <li>
+        Persian support will be complete soon, others are questionable due to their special features.
+    </li>
+    <li>
+        Unsupported special characters can be included as Unicode within the transliteration
+    </li>
+    <li>
+        Author: Laszlo Borsos, Hungary.
+    </li>
+    <li>
+        Contact: <a href="http://m.me/borsosl" target="_blank">on Messenger</a>
+    </li>
+</ul>
+
 
 <script src="main.js"></script>
 </body>

@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-    mode: 'development',
+    mode: 'production',
     entry: './backend/app/src/tlit/web-index.ts',
     output: {
         filename: 'main.js',

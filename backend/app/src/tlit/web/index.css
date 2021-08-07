@@ -4,7 +4,7 @@ html, textarea {
 
 body {
     padding: 0 1em;
-    background-color: #ddd;
+    background-color: #f5f5dd;
 }
 
 h1 {
@@ -16,7 +16,6 @@ h1 {
 
 h3 {
     font-size: 1em;
-    text-align: center;
     margin: 0 0 0.5em;
 }
 
@@ -81,4 +80,48 @@ textarea {
 
 img {
     height: 20px;
+}
+
+.tr-expl {
+    width: 100%;
+    background-color: #f8f8ee;
+    border: 3px double brown;
+    border-collapse: collapse;
+}
+
+thead {
+    background-color: #f3f3cc;
+    font-weight: bold;
+}
+
+.tr-expl td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 2px 5px;
+    vertical-align: top;
+}
+
+.tr-expl td:nth-child(1) {
+    width: 3em;
+    font-size: 140%;
+}
+
+.tr-expl thead td:nth-child(1) {
+    font-size: 100%;
+}
+
+.tr-expl td:nth-child(2) {
+    width: 5em;
+}
+
+@media screen and (max-width: 1023px) {
+    html, textarea {
+        font: 0.9em/1.6 sans-serif;
+    }
+}
+
+@media screen and (max-width: 599px) {
+    html, textarea {
+        font: 0.8em/1.6 sans-serif;
+    }
 }
