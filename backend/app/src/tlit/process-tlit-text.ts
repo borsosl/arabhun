@@ -1,9 +1,6 @@
-import {map, sequence, numeric} from './tlit-to-unicode-map';
+import {map, numeric, SequenceArray} from './tlit-to-unicode-map';
 
 const lineSplitter = /\r?\n/;
-const alifHamzaRex = /2[auoie]/;
-const tashkilRex = /^([auoie0+1]|[aiu]N|AN|20|1[*~])$/;
-const startingVowelRex = /^[uoie]$/;
 
 // for embedding:
 // noinspection JSUnusedGlobalSymbols
@@ -21,7 +18,6 @@ export function processLine(line: string, addTashkil = true) {
     let numQuote = false;
     let cp: number[] = [];
     const len = line.length;
-    let alifHamza = false;
     let pending = '';
     let wordStart = 0;
 
@@ -31,23 +27,21 @@ export function processLine(line: string, addTashkil = true) {
         if(isWhite(cdp)) {
             wordStart = ix + 1;
             cp.push(cdp);
-            reset();
             continue;
         }
         if(!trans) {
-            if(ch === '{')
+            if(ch === '{' && !shortQuote) {
                 trans = true;
-            else {
+                wordStart = ix + 1;
+            } else {
                 cp.push(cdp);
                 if(shortQuote)
                     trans = true;
             }
-            reset();
             continue;
         }
         if(ch === '}' || (shortQuote = ch === '`')) {
             trans = false;
-            reset();
             continue;
         }
         if(numQuote) {
@@ -65,97 +59,82 @@ export function processLine(line: string, addTashkil = true) {
         }
         if(ch === '[') {
             numQuote = true;
-            reset();
             continue;
         }
-        if(ch === '^') {
-            reset();
-            continue;   // handled with lookahead
-        }
-        let sub = line.substr(ix, 2);
-        const isTashkil = tashkilRex.test(sub);
-        if(isTashkil && !addTashkil && !enforceTashkil(line, ix + sub.length)) {
-            if(sub === 'AN' || sub === '1~')
-                sub = 'A';
-            else if(sub === '20')
-                sub = '2A';
-            else {
-                reset();
-                if(ix === wordStart && line.length === 1)
-                    cp.push(map['A']);
-                ix += sub.length - 1;
-                continue;
-            }
-        } else if(alifHamza && sub[1] === '*' && startingVowelRex.test(sub[0])) {
-            reset();
-            ix++;
+        if(ch === '-' || ch === '^')
+            continue;   // - ignored, ^ handled with lookahead
+
+        let chMapping = map[ch];
+        if(!chMapping) {
+            cp.push(ch.codePointAt(0));
             continue;
         }
-        alifHamza = false;
-        const cc = sequence[sub];
-        if(cc) {
-            if(handleShaddah(false, sub))
-                continue;
-            for(const c of cc)
-                cp.push(c);
-            ix++;
+        if(typeof chMapping === 'number') {
+            handleShaddahSwap(false);
+            cp.push(chMapping);
             continue;
         }
-        let c = map[sub];
-        if(c) {
-            if(handleShaddah(isTashkil, sub))
+        const seqArr = chMapping as SequenceArray;
+        let found = false;
+        for(const seq of seqArr) {
+            const sub = line.substr(ix, seq[0].length);
+            if(sub !== seq[0])
                 continue;
-            if(ix === wordStart && startingVowelRex.test(sub))
-                cp.push(map['A']);
-            cp.push(c);
-            if(line.length >= ix + 2) {
-                alifHamza = alifHamzaRex.test(sub);
-                if(alifHamza) {
-                    continue;
+            found = true;
+            const seqMapping = seq[1];
+            if(seqMapping instanceof Array) {
+                if(ch !== '@')  // shadda comes into the middle of ah
+                    handleShaddahSwap(false);
+                for(let c of seqMapping as number[]) {
+                    if(c < 0) {
+                        if(addTashkil || enforceTashkil(line, ix + sub.length))
+                            c = -c;
+                        else
+                            continue;
+                    }
+                    cp.push(c);
+                    if(ch === '@' && c === 0x064e)
+                        handleShaddahSwap(false);
                 }
-                ix++;
+            } else {
+                let c = seqMapping as number;
+                let isTashkil;
+                if(c < 0) {
+                    if(ix === wordStart && seq.length !== 3)    // alif before leading tashkil, unless specified
+                        cp.push(0x0627);
+                    if(addTashkil || enforceTashkil(line, ix + sub.length)) {
+                        c = -c;
+                        isTashkil = true;
+                    } else if(seq.length === 3) {       // specified replacement of tashkil(-like) char
+                        c = seq[2];
+                    } else {
+                        ix += sub.length - 1;           // no replacement for tashkil in plain mode, just skip it
+                        continue;
+                    }
+                }
+                if(handleShaddahSwap(isTashkil, ch))
+                    continue;
+                cp.push(c);
             }
-        } else {
-            sub = ch;
-            if(ix === wordStart && startingVowelRex.test(sub))
-                cp.push(map['A']);
-            let isTashkil = tashkilRex.test(sub);
-            if(isTashkil && !addTashkil && !enforceTashkil(line, ix + 1)) {
-                reset();
-                continue;
-            }
-            if(handleShaddah(isTashkil, sub))
-                continue;
-            if(sub === '-') {
-                reset();
-                continue;
-            }
-            c = map[sub];
-            if(!c) {
-                cp.push(sub.codePointAt(0));
-                reset();
-                continue;
-            }
-            cp.push(c);
+            ix += sub.length - 1;
+            break;
+        }
+        if(!found) {
+            cp.push(ch.codePointAt(0));
         }
     }
-    if(pending)
-        cp.push(map[pending]);
+    handleShaddahSwap(false);
     return String.fromCodePoint.apply(null, cp);
 
-    function reset() {
-        alifHamza = false;
-    }
 
-    function handleShaddah(isTashkil: boolean, sub: string) {
+    function handleShaddahSwap(isTashkil: boolean, sub?: string) {
         if(!isTashkil) {
             if(pending === '+') {
-                cp.push(map[pending]);
+                cp.push(0x0651);
                 pending = '';
             }
         } else if(sub === '+') {
             pending = sub;
-            reset();
             return true;
         }
     }

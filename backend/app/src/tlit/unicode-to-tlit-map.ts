@@ -11,7 +11,7 @@ export const map: {[key: number]: string} = {
     0x0626: '2Y',
     0x0627: 'A',
     0x0628: 'b',
-    0x0629: 'h*',
+    0x0629: '@',
     0x062a: 't',
     0x062b: 't*',
     0x062c: 'j',

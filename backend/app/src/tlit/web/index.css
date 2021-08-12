@@ -97,13 +97,14 @@ thead {
 .tr-expl td {
     border: 1px solid black;
     border-collapse: collapse;
-    padding: 2px 5px;
+    padding: 6px 5px;
     vertical-align: top;
 }
 
 .tr-expl td:nth-child(1) {
     width: 3em;
     font-size: 140%;
+    line-height: 125%;
 }
 
 .tr-expl thead td:nth-child(1) {

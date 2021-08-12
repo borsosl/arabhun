@@ -84,6 +84,7 @@ export function processLine(line: string, doQuote = true) {
         if(pending) {
             if(ch === '+' && shaddaSwapRex.test(pending)) {
                 write(ch, cp);
+                continue;
             }
             if(pending === 'A') {
                 if(ch === 'aN')
@@ -109,6 +110,8 @@ export function processLine(line: string, doQuote = true) {
                     write('2i*', cp);
             } else if(pending === '2') {
                 write('2-', cp);
+            } else if(pending === 'a' && ch === '@') {
+                // omit a, implied in @
             } else {
                 write(pending, cp);
             }

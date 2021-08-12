@@ -49,14 +49,14 @@
 <ul>
     <li>
         <b>ASCII-only</b> - for the benefit of non-technical users, it only uses characters that are
-        available on most Latin-based keyboards. Accessible on any platform without special software.
+        available on most Latin-based keyboards. It works on any platform without special software.
     </li>
     <li>
         <b>Readable and easier to memorize</b> - where the lowercase and uppercase Latin letter is not enough
         for all the variations of corresponding sounds, then for the sake of readability this scheme breaks with
         the tradition of using a single character, and allows some sequences consisting of a letter plus
         usually one special symbol. Thus one Latin base letter can refer to more than two Arabic letters,
-        and sequences reflect the original sound better than some substitute sign. It also means that
+        and such sequences reflect the original sound better than some substitute sign. It also means that
         ASCII punctuation marks and other symbols can be preserved for their original purpose.
     </li>
     <li>
@@ -81,18 +81,19 @@
     <li>
         <b>Printable</b> - removal of the diacritic marks is a simple process, so a text
         with diacritics is easily convertible to Unicode with or without them.
+        When a sequence implicitly contains a tashkil, it can be undone with an * after it.
         Text that does not include diacritics is also prefectly valid for regular printing.
     </li>
 </ul>
 
 <h3 class="top40">Sample transliterated sentence</h3>
 <p>
-    yuUladu jamiY3u Al-n+aAsi 2aH0raAraNA mutasaAwiYna fiY Al0-karaAmah*i wa-Al0-HuquUqi. waqad0 wuhibuUA
+    yuUladu jamiY3u Al-n+aAsi 2aH0raAraNA mutasaAwiYna fiY Al0-karaAm@i wa-Al0-HuquUqi. waqad0 wuhibuUA
     3aq0laNA wa-DamiYraNA wa-3alay0him0 2an0 yu3aAmila ba30Duhum0 ba30DaNA biruUHi 1~l0-2iXaA2-i.
 </p>
 <p>
-    (Try it out above and cf. <a href="https://en.wikipedia.org/wiki/Buckwalter_transliteration">
-        Buckwalter transliteration</a>)
+    (Try it out above and cf. the same text at <a href="https://en.wikipedia.org/wiki/Buckwalter_transliteration"
+        target="_blank">Buckwalter transliteration</a>)
 </p>
 
 <h3 class="top40">Alphabet (includes Persian)</h3>
@@ -109,9 +110,11 @@
         <td>ا</td>
         <td>A<br/>i* / u*</td>
         <td>
-            Generally uppercase vowels are alphabet letters and lowercase vowels are diacritics.<br/>
+            Generally uppercase vowels are alphabet letters that always appear and lowercase vowels are
+            diacritics.<br/>
             i*, u* - the vowel that the alif represents at the start of word is specified in
-            transliteration, but its mark is unwanted in tashkil printing mode.
+            transliteration, but only the alif appears in both printing modes. For all the lowercase vowels
+            the * means intentional omission of the mark in tashkil printing mode.
         </td>
     </tr>
     <tr>
@@ -133,8 +136,9 @@
         <td>ث</td>
         <td>t*</td>
         <td>
-            This scheme uses mostly * as a modifier symbol to allow more variation to the base letters,
-            cf. t, T, t*, T*.
+            This scheme uses mostly * as a modifier symbol to allow more variation to the Latin base letters,
+            other then lowercase and uppercase. cf. t, T, t*. The * itself does not imply any common
+            semantic significance. See also the note above for alif regarding vowels.
         </td>
     </tr>
     <tr>
@@ -275,8 +279,8 @@
         <td>و</td>
         <td>U / w / O</td>
         <td>
-            The capital letters here express a clean long vowel (with an option for dialect pronunciation),
-            while the w may signal a diphtong.
+            The capital letters here express a pure long vowel (with an option for dialect pronunciation),
+            while the w may signal a diphtong. It is up to the user's preference which one to write.
         </td>
     </tr>
     <tr>
@@ -285,19 +289,22 @@
         <td>Similar to the above.</td>
     </tr>
     <tr>
-        <td>ی</td>
+        <td>ـیـ ی</td>
         <td>Y* / y* / E*</td>
-        <td>Persian version of yah, the dots don't appear in the final position.</td>
+        <td>Persian version of yA2, the dots don't appear in the final position.</td>
     </tr>
     <tr>
         <td>ى</td>
         <td>A*</td>
-        <td>Alif maqsUrah*.</td>
+        <td>Alif maksUr@.</td>
     </tr>
     <tr>
-        <td>ة</td>
-        <td>h* / T*</td>
-        <td>T* - optionally expresses phonetical difference</td>
+        <td>ـَة<br/>ة</td>
+        <td>@ / @t<br/>@* / @*t</td>
+        <td>
+            @ = fatH@ + tA2 marbUT@ -- @t : same, but expresses phonetical difference.<br/>
+            @* = tA2 marbUT@ only, intentional omission of fatH@ when printing tashkil.
+        </td>
     </tr>
     </tbody>
 </table>
@@ -313,32 +320,33 @@
     </thead>
     <tbody>
     <tr>
-        <td> َ </td>
+        <td> َ <br/>اَ</td>
         <td>a</td>
         <td>
-            Lowercase vowels mark diacritic signs. These can be included or excluded in the
-            transliterated version. When included, they can be in turn included or excluded during the
-            conversion into Arabic script.
+            fatH@. At the beginning of a word the alif is implied, anywhere else it's just the mark.<br/>
+            Lowercase vowels mean diacritic marks. These can be included or excluded in the
+            transliterated version. When included, the tashkil printing mode decides if they
+            appear in the Arabic script or not.
         </td>
     </tr>
     <tr>
         <td> ِ <br/>اِ</td>
         <td>i / e</td>
         <td>
-            At the beginning of a word the alif is implied.<br/>
+            kasr@. At the beginning of a word the alif is implied.<br/>
             e - alternative for dialects
         </td>
     </tr>
     <tr>
         <td> ُ <br/>اُ</td>
         <td>u / o</td>
-        <td>Similar to the above.</td>
+        <td>Dam+@. Similar to the above.</td>
     </tr>
     <tr>
         <td> ً </td>
         <td>aN</td>
         <td>
-            If an alif comes after this, it must be explicitlitly added: aNA (just like the mute
+            tanwYn. If an alif comes after this, it must be explicitlitly added: aNA (just like the mute
             alif in -UA verb suffix must be explicit).
         </td>
     </tr>
@@ -363,17 +371,17 @@
     <tr>
         <td> ْ </td>
         <td>0</td>
-        <td></td>
+        <td>sukUn</td>
     </tr>
     <tr>
         <td> ّ </td>
         <td>+</td>
-        <td></td>
+        <td>s*ad+@</td>
     </tr>
     <tr>
         <td>آ</td>
         <td>A~</td>
-        <td>Alif with maddah. The tilde is a secondary modifier symbol, used for two variations of Alif.</td>
+        <td>Alif with mad+@. The tilde is a secondary modifier symbol, used for two variations of Alif.</td>
     </tr>
     <tr>
         <td> ٰ </td>
@@ -388,7 +396,7 @@
     </tbody>
 </table>
 
-<h3 class="top40">Hamza</h3>
+<h3 class="top40">hamz@</h3>
 <table class="tr-expl">
     <thead>
     <tr>
@@ -402,38 +410,43 @@
         <td>أ</td>
         <td>2A</td>
         <td>
-            Above alif with unknown vowel mark or unwanted in tashkil printing mode.
-            Eg. the result of converting from Arabic text without diacritics.
+            Above alif, vowel mark is unknown or intentionally omitted in tashkil printing mode.
         </td>
     </tr>
     <tr>
         <td>أَ</td>
         <td>2a</td>
-        <td>Above alif with known vowel.</td>
+        <td>
+            Above alif with known vowel. Shorthand for 2Aa. This should be preferred to 2A so that
+            fatH@ can appear in tashkil mode.
+        </td>
     </tr>
     <tr>
         <td>أُ</td>
         <td>2u / 2o</td>
-        <td>Above alif with known vowel.</td>
-    </tr>
-    <tr>
-        <td>إِ</td>
-        <td>2i / 2e</td>
-        <td>Below alif with vowel mark.</td>
-    </tr>
-    <tr>
-        <td>إ</td>
-        <td>2i* / 2e*</td>
         <td>
-            Below alif with unwanted vowel mark in tashkil printing mode.
-            Eg. the result of converting from Arabic text without diacritics.
+            Similar to the above. Shorthand for 2Au.
         </td>
     </tr>
     <tr>
         <td>أ</td>
         <td>2u* / 2o*</td>
         <td>
-            Above alif with specified but unwanted vowel mark in tashkil printing mode.
+            Above alif with specified but intentionally omitted vowel mark in tashkil printing mode.
+        </td>
+    </tr>
+    <tr>
+        <td>إِ</td>
+        <td>2i / 2e</td>
+        <td>
+            Below alif with vowel mark.
+        </td>
+    </tr>
+    <tr>
+        <td>إ</td>
+        <td>2i* / 2e*</td>
+        <td>
+            Below alif with specified but intentionally omitted vowel mark in tashkil printing mode.
         </td>
     </tr>
     <tr>
@@ -455,8 +468,8 @@
         <td>ء</td>
         <td>2 / 2-</td>
         <td>
-            Standalone hamza sign. The dash is needed if the word continues and would result
-            in one of the above hamza sequences.
+            hamz@ on the line. The dash is needed when the word continues and would result
+            in one of the above hamz@ sequences.
         </td>
     </tr>
     </tbody>
@@ -495,7 +508,7 @@
     <tr>
         <td>ٱ</td>
         <td>1~</td>
-        <td>Alif waslah.</td>
+        <td>Alif waSl@ / hamz@tu Al-waSli.</td>
     </tr>
     <tr>
         <td>۔</td>
@@ -506,7 +519,7 @@
         <td>ـ</td>
         <td>_</td>
         <td>
-            underscore - the taTwYl prints the surrounding letter in connected mode or prolongs the connection
+            Underscore - the taTwYl prints the surrounding letter in connected mode or prolongs the connection
             between neighbouring letters for a calligraphic effect.
         </td>
     </tr>
@@ -522,8 +535,8 @@
         <td></td>
         <td>^</td>
         <td>
-            The preceding vowel mark is always written, eg. Al-l+^1^h enforces the s*ad+ah* and the
-            dagger Alif even when tas*kYl is otherwise omitted from the text.
+            The preceding vowel mark is always written, eg. Al-l+^1^h enforces the s*ad+@ and the
+            dagger Alif even when tashkil is otherwise omitted from the text.
         </td>
     </tr>
     <tr>
@@ -557,6 +570,54 @@
     </tbody>
 </table>
 
+<h3 class="top40">Numeric context</h3>
+<p>
+    Between [] pairs, only the below characters are converted, everything else remains Latin.<br/>
+    Use Latin context ( } __ { ) for Western numbers, but then from-to values should be written
+    with the ending value first.
+</p>
+<table class="tr-expl">
+    <thead>
+    <tr>
+        <td>Arabic</td>
+        <td>Latin</td>
+        <td>Notes</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>٠-٩</td>
+        <td>0-9</td>
+        <td>Numbers</td>
+    </tr>
+    <tr>
+        <td>٫</td>
+        <td>.</td>
+        <td>Decimal point</td>
+    </tr>
+    <tr>
+        <td>٬</td>
+        <td>,</td>
+        <td>Thousands separator</td>
+    </tr>
+    <tr>
+        <td>٭</td>
+        <td>*</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>؍</td>
+        <td>/</td>
+        <td>Arabic date separator. Use `/ for slash, but that changes the order of numbers in Unicode.</td>
+    </tr>
+    <tr>
+        <td>٪</td>
+        <td>%</td>
+        <td></td>
+    </tr>
+    </tbody>
+</table>
+
 <h3 class="top40">Additional notes</h3>
 <ul>
     <li>
@@ -569,7 +630,7 @@
         Unsupported special characters can be included as Unicode within the transliteration
     </li>
     <li>
-        Author: Laszlo Borsos, Hungary.
+        Author: Laszlo Borsos, Hungary. Suggestions by Professor Nizar Habash, UAE.
     </li>
     <li>
         Contact: <a href="http://m.me/borsosl" target="_blank">on Messenger</a>
