@@ -75,6 +75,7 @@ export const map: {[key: number]: string} = {
     0x06a9: 'K',
     0x06ad: 'G*',
     0x06af: 'g',
+    0x06c0: '2h',
     0x06cc: 'Y*',
     0x06d4: '._'
 };

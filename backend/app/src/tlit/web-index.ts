@@ -14,6 +14,7 @@ const copyTransEl = document.querySelector('#copy-trans') as HTMLImageElement;
 const copyArabEl = document.querySelector('#copy-arabic') as HTMLImageElement;
 const wiktionaryEl = document.querySelector('#wiktionary') as HTMLImageElement;
 const gtranslateEl = document.querySelector('#gtranslate') as HTMLImageElement;
+const forvoEl = document.querySelector('#forvo') as HTMLImageElement;
 
 let prev = '';
 let fontSize = 160;
@@ -102,6 +103,10 @@ function gtranslateClick() {
     window.open('https://translate.google.com/?sl=ar&tl=en&op=translate&text=' + encodeURIComponent(outEl.value), '_blank').focus();
 }
 
+function forvoClick() {
+    window.open('https://forvo.com/search/' + encodeURIComponent(outEl.value), '_blank').focus();
+}
+
 isTransEl.onclick = sourceChange;
 isUniEl.onclick = sourceChange;
 inEl.onkeyup = tlitChange;
@@ -117,4 +122,5 @@ copyTransEl.onclick = () => copy(inEl);
 copyArabEl.onclick = () => copy(outEl);
 wiktionaryEl.onclick = wiktionaryClick;
 gtranslateEl.onclick = gtranslateClick;
+forvoEl.onclick = forvoClick;
 window.onfocus = pageActivated;

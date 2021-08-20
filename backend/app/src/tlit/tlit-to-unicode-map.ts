@@ -27,6 +27,7 @@ export const map: {[key: string]: TransMapEntry} = {
         ['2e', [0x0625, -0x0650]],
         ['2Y', 0x0626],
         ['20', [0x0623, -0x0652]],
+        ['2h', 0x06c0],
         ['2', 0x0621]
     ],
     'i': [
@@ -82,7 +83,10 @@ export const map: {[key: string]: TransMapEntry} = {
     'S': 0x0635,
     'D': 0x0636,
     'T': 0x0637,
-    'Z': 0x0638,
+    'Z': [
+        ['Z*', 0x0636],
+        ['Z', 0x0638]
+    ],
     '3': 0x0639,
     'R': 0x063a,
     '_': 0x0640,
