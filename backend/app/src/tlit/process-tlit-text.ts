@@ -87,12 +87,13 @@ export function processLine(line: string, addTashkil = true) {
                     handleShaddahSwap(false);
                 for(let c of seqMapping as number[]) {
                     if(c < 0) {
-                        if(addTashkil || enforceTashkil(line, ix + sub.length))
-                            c = -c;
-                        else
-                            continue;
+                        c = -c;
+                        if(addTashkil || enforceTashkil(line, ix + sub.length)) {
+                            cp.push(c);
+                        }
+                    } else {
+                        cp.push(c);
                     }
-                    cp.push(c);
                     if(ch === '@' && c === 0x064e)
                         handleShaddahSwap(false);
                 }

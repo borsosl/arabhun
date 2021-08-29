@@ -31,7 +31,8 @@ describe('Transliteration to Unicode', () => {
         ['2u*klm', 'أكلم', 'أكلم'],
         ['telefiz0yoOn', 'تِلِفِزْيُون', 'تلفزيون'],
         ['ij0lis0 uk0tub0', 'اِجْلِسْ اُكْتُبْ', 'اجلس اكتب'],
-        ['i*jls u*ktb', 'اجلس اكتب', 'اجلس اكتب']
+        ['i*jls u*ktb', 'اجلس اكتب', 'اجلس اكتب'],
+        ['mak+^@', 'مَكَّة', 'مكّة']
     ];
 
     describe('should process reversible samples', function() {

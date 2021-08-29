@@ -1,5 +1,5 @@
 # gcloud deployment file
 
-runtime: nodejs10
+runtime: nodejs14
 env_variables:
     LOG_LEVEL: info

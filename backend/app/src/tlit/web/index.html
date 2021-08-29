@@ -37,6 +37,7 @@
             <span><input type="checkbox" id="ltr"></span> Left-to-right&emsp;
             <span><img src="wiktionary.png" id="wiktionary" accesskey="w" title="Wiktionary: alt-w"></span>
             <span><img src="gtranslate.png" id="gtranslate" accesskey="g" title="G.Translate: alt-g"></span>
+            <span><img src="gsearch.png" id="gsearch" accesskey="s" title="G.Search: alt-s"></span>
             <span><img src="forvo.png" id="forvo" accesskey="p" title="Forvo: alt-p"></span>
             <span><img src="clipboard.png" id="copy-arabic" accesskey="c" title="Copy: alt-c"></span>
         </div>
@@ -62,8 +63,8 @@
     </li>
     <li>
         <b>Phonetic</b> - some Arabic letters can be written with multiple corresponding transliteration.
-        This can express pure vowels vs. diphtongs, or differences in dialect, or the change in
-        pronunciation of ة.
+        This can express pure vowels vs. diphtongs, differences in dialect, foreign sounds or the
+        change in pronunciation of ة.
     </li>
     <li>
         <b>Unambiguous</b> - even though some letters are expressed with more than one character, the
@@ -71,7 +72,7 @@
         itself. Combinations like th, dh, sh were avoided as they could be interpreted as t + h, etc.
         instead of a single letter. This is critical for computer processing. Transliterated text is
         convertible to Arabic script and vice versa. However, phonetic variations will be lost in the
-        reverse conversion, and the most common transliterated version will be used.
+        reverse conversion, and the most common transliterated letter will be used.
     </li>
     <li>
         <b>Embeddable</b> - since characters like {} and [] remain free due to sequences, they can be used
@@ -84,6 +85,10 @@
         with diacritics is easily convertible to Unicode with or without them.
         When a sequence implicitly contains a tashkil, it can be undone with an * after it.
         Text that does not include diacritics is also prefectly valid for regular printing.
+    </li>
+    <li>
+        <b>Processable</b> - because of the Latin letters it's easier to write searches (eg. RegExp)
+        on stored text and it can be converted to other transliteration systems.
     </li>
 </ul>
 
@@ -120,8 +125,8 @@
     </tr>
     <tr>
         <td>ب</td>
-        <td>b</td>
-        <td></td>
+        <td>b / p*</td>
+        <td>p* - phonetical alternative, eg. p*aAriYs</td>
     </tr>
     <tr>
         <td>پ</td>
@@ -233,8 +238,8 @@
     </tr>
     <tr>
         <td>ف</td>
-        <td>f</td>
-        <td></td>
+        <td>f / v*</td>
+        <td>v* - phonetical alternative, eg. v*iYd0yoO</td>
     </tr>
     <tr>
         <td>ق</td>
